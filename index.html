@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rumah Bahasa Tools - Seat Picker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="top-nav">
+        <div class="nav-brand">Rumah Bahasa Tools</div>
+        <div class="nav-menu">
+            <button class="nav-item active" data-target="app-seat-picker">Seat Picker</button>
+            <button class="nav-item" data-target="app-timer">Timer</button>
+            <button class="nav-item" data-target="app-team-gen">Team Generator</button>
+            <button class="nav-item" data-target="app-scoreboard">Scoreboard</button>
+        </div>
+        <div class="nav-controls">
+            <button id="btn-fullscreen" class="btn-secondary">Layar Penuh</button>
+        </div>
+    </nav>
+
+    <div class="app-container">
+        <!-- APP: SEAT PICKER -->
+        <div id="app-seat-picker" class="app-view active">
+            <header class="view-header">
+                <h2>Seat Picker</h2>
+                <div class="stats-controls">
+                    <div class="active-count">Siswa aktif: <span id="active-count">18</span></div>
+                    <button id="btn-reset" class="btn-secondary">Reset Semua</button>
+                    <button id="btn-clear" class="btn-secondary">Kosongkan Semua</button>
+                </div>
+            </header>
+
+            <main class="main-content">
+                <div class="left-panel">
+                    <div class="layout-wrapper">
+                        <div class="classroom-grid" id="classroom-grid">
+                            <!-- Seats are injected here -->
+                        </div>
+                        <div class="board">Papan Tulis</div>
+                    </div>
+                    
+                    <div class="extra-seats-area">
+                        <h3 class="extra-title">Bangku Tambahan</h3>
+                        <div class="extra-controls">
+                            <button id="btn-add-seat" class="btn-secondary">Tambah Bangku</button>
+                            <button id="btn-reset-extra" class="btn-secondary">Reset Bangku</button>
+                        </div>
+                        <div class="extra-seats-container" id="extra-seats-container">
+                            <!-- Extra seats start here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-panel">
+                    <div class="tabs">
+                        <button class="tab-btn active" data-tab="tab-random">Random Pick</button>
+                        <button class="tab-btn" data-tab="tab-order">Generate Order</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="tab-random">
+                        <p class="tab-desc">Pilih satu siswa secara acak dari bangku yang aktif.</p>
+                        <button id="btn-pick" class="btn-primary">Pilih Siswa</button>
+                    </div>
+                    
+                    <div class="tab-content" id="tab-order">
+                        <p class="tab-desc">Acak semua bangku aktif untuk membuat urutan soal atau giliran.</p>
+                        <button id="btn-generate-order" class="btn-primary">Buat Urutan</button>
+                        <div id="order-result" class="order-list"></div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- APP: TIMER -->
+        <div id="app-timer" class="app-view">
+            <header class="view-header">
+                <h2>Timer</h2>
+            </header>
+            <main class="main-content centered">
+                <div class="timer-container">
+                    <div class="timer-display" id="timer-display">00:00</div>
+                    <div class="timer-presets">
+                        <button class="btn-preset" data-time="60">1 Min</button>
+                        <button class="btn-preset" data-time="180">3 Min</button>
+                        <button class="btn-preset" data-time="300">5 Min</button>
+                        <button class="btn-preset" data-time="600">10 Min</button>
+                    </div>
+                    <div class="timer-custom">
+                        <input type="number" id="timer-input-min" min="0" max="99" placeholder="Min" class="time-input">
+                        <span>:</span>
+                        <input type="number" id="timer-input-sec" min="0" max="59" placeholder="Sec" class="time-input">
+                        <button id="btn-timer-set" class="btn-secondary">Set Custom</button>
+                    </div>
+                    <div class="timer-controls">
+                        <button id="btn-timer-start" class="btn-primary">Start</button>
+                        <button id="btn-timer-pause" class="btn-secondary">Pause</button>
+                        <button id="btn-timer-reset" class="btn-secondary">Reset</button>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- APP: TEAM GENERATOR -->
+        <div id="app-team-gen" class="app-view">
+            <header class="view-header">
+                <h2>Team Generator</h2>
+                <div class="stats-controls">
+                    <div class="active-count">Siswa aktif: <span id="team-active-count">18</span></div>
+                </div>
+            </header>
+            <main class="main-content centered">
+                <div class="team-gen-container">
+                    <div class="team-controls">
+                        <label>Jumlah Kelompok:</label>
+                        <div class="team-presets">
+                            <button class="btn-preset team-btn" data-groups="2">2</button>
+                            <button class="btn-preset team-btn" data-groups="3">3</button>
+                            <button class="btn-preset team-btn" data-groups="4">4</button>
+                            <button class="btn-preset team-btn" data-groups="5">5</button>
+                        </div>
+                        <button id="btn-generate-teams" class="btn-primary">Buat Ulang</button>
+                    </div>
+                    <div class="teams-result" id="teams-result">
+                        <!-- Teams injected here -->
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- APP: SCOREBOARD -->
+        <div id="app-scoreboard" class="app-view">
+            <header class="view-header">
+                <h2>Scoreboard</h2>
+                <div class="stats-controls">
+                    <label>Jumlah Tim:</label>
+                    <select id="score-team-count" class="dropdown">
+                        <option value="2">2 Tim</option>
+                        <option value="3">3 Tim</option>
+                        <option value="4">4 Tim</option>
+                    </select>
+                </div>
+            </header>
+            <main class="main-content">
+                <div class="scoreboard-container" id="scoreboard-container">
+                    <!-- Scoreboards injected here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div id="result-overlay" class="overlay">
+        <div id="result-text" class="result-text">Bangku 7</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
