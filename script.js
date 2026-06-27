@@ -1,28 +1,43 @@
 const seatLayout = [
-    // Row 1 (Bottom, closest to board)
-    { id: 1, row: 6, col: 3 },
-    { id: 2, row: 6, col: 4 },
-    { id: 3, row: 6, col: 6 },
-    // Row 2
-    { id: 5, row: 5, col: 3 },
-    { id: 6, row: 5, col: 4 },
-    { id: 4, row: 5, col: 6 },
-    // Row 3
-    { id: 7, row: 4, col: 3 },
-    { id: 8, row: 4, col: 4 },
-    { id: 10, row: 4, col: 6 },
-    // Row 4
-    { id: 11, row: 3, col: 3 },
-    { id: 12, row: 3, col: 4 },
-    { id: 9, row: 3, col: 6 },
-    // Row 5
-    { id: 13, row: 2, col: 2 },
-    { id: 14, row: 2, col: 3 },
-    { id: 15, row: 2, col: 4 },
-    { id: 16, row: 2, col: 5 },
-    // Row 6 (Top, farthest)
-    { id: 17, row: 1, col: 3 },
-    { id: 18, row: 1, col: 4 },
+    // Bottom group left (1, 2)
+    { id: 1, row: 9, col: 1 },
+    { id: 2, row: 8, col: 1 },
+    // Middle group left (3, 4, 9)
+    { id: 3, row: 7, col: 1 },
+    { id: 4, row: 6, col: 1 },
+    { id: 9, row: 5, col: 2 },
+    // Bottom group right (5, 6)
+    { id: 5, row: 9, col: 4 },
+    { id: 6, row: 8, col: 4 },
+    // Middle group right (7, 8, 10)
+    { id: 7, row: 7, col: 4 },
+    { id: 8, row: 6, col: 4 },
+    { id: 10, row: 5, col: 3 },
+    // Far right group (11, 12, 13, 14)
+    { id: 11, row: 9, col: 7 },
+    { id: 12, row: 8, col: 7 },
+    { id: 13, row: 7, col: 7 },
+    { id: 14, row: 6, col: 7 },
+    // Upper group (15, 16, 17, 18)
+    { id: 15, row: 3, col: 1 },
+    { id: 16, row: 3, col: 2 },
+    { id: 17, row: 3, col: 3 },
+    { id: 18, row: 3, col: 4 },
+    // Top group (19, 20)
+    { id: 19, row: 1, col: 2 },
+    { id: 20, row: 1, col: 3 },
+];
+
+const tableLayout = [
+    { row: '8 / 10', col: '2 / 3' }, // T1 (1,2)
+    { row: '8 / 10', col: '3 / 4' }, // T2 (5,6)
+    { row: '6 / 8', col: '2 / 3' },  // T3 (3,4,9)
+    { row: '6 / 8', col: '3 / 4' },  // T4 (7,8,10)
+    { row: '4 / 5', col: '1 / 3' },  // T5 (15,16)
+    { row: '4 / 5', col: '3 / 5' },  // T6 (17,18)
+    { row: '2 / 3', col: '2 / 4' },  // T7 (19,20)
+    { row: '8 / 10', col: '6 / 7' }, // T8 (11,12)
+    { row: '6 / 8', col: '6 / 7' }   // T9 (13,14)
 ];
 
 let isPicking = false;
@@ -211,6 +226,17 @@ function playDing() {
 document.addEventListener('DOMContentLoaded', () => {
     // Render seats
     const grid = document.getElementById('classroom-grid');
+
+    // Render tables first so they are behind seats if they ever overlap
+    tableLayout.forEach(table => {
+        const div = document.createElement('div');
+        div.className = 'meja';
+        div.textContent = 'Meja';
+        div.style.gridRow = table.row;
+        div.style.gridColumn = table.col;
+        grid.appendChild(div);
+    });
+
     seatLayout.forEach(seat => {
         const div = document.createElement('div');
         div.className = 'seat active';
@@ -234,13 +260,13 @@ document.addEventListener('DOMContentLoaded', () => {
     updateCount();
 
     document.getElementById('btn-add-seat').addEventListener('click', () => {
-        let nextId = 19;
+        let nextId = 21;
         if (extraSeatsData.length > 0) {
             const ids = extraSeatsData.map(s => s.id);
             nextId = Math.max(...ids) + 1;
         }
-        if (nextId > 30) {
-            alert("Maksimal 30 bangku!");
+        if (nextId > 35) {
+            alert("Maksimal 35 bangku!");
             return;
         }
         const newSeat = { id: nextId, x: null, y: null, active: true };
